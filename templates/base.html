@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        {% block head %}
         <meta charset="UTF-8">
         <title>{% block title %}cmsbook{% endblock %}</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='external/blueprint/blueprint/screen.css') }}"  type="text/css" media="screen, projection" />
@@ -32,11 +33,14 @@
              }
          }
         </style>
+        {% endblock %}
     </head>
     <body>
+        {% block body %}
         <div class="container">
             <div class="span-24 last">
                 <div id="header">
+                    {% block header %}
                     <script type="text/javascript">
                      $(document).ready(function(){
                          $(".markdown-body a:not([href^='#'])").attr('target', '_blank');
@@ -49,11 +53,13 @@
                     <div class="span-2 append-bottom last">
                         <i class="fas fa-book fa-2x"></i>
                     </div>
+                    {% endblock %}
                 </div><!--header-->
             </div>
         </div><!--container -->
 
         <div id="subheader">
+            {% block subheader %}
             <div class="container">
                 <div class="span-24 last">
                     <div id="subheadernavi">
@@ -62,25 +68,23 @@
                     </div><!--subheadernavi-->
                 </div>
             </div><!--container -->
+            {% endblock %}
         </div><!--subheader-->
         <div class="container">
-            <div class="span-24 torse">
-
-
-                <div class="span-24 last">
-                    <div id="content">
-
-                        <article class="markdown-body"><p>cmsbook in Documents</p></article>
-                        <div class="clear">
-                        </div>
-                    </div><!--content-->
-                </div>
-            </div><!--torso-->
-            <div class="span-24 last">
-                <div id="footer">
-                    &copy;2018 Tai Sakuma, <a href="https://github.com/TaiSakuma/cmsbook_bind" target="_blank">cmsbook_bind</a>
-                </div><!--footer-->
+           <div class="span-24">
+              <div id="torso">
+                {% block torso %}
+                {% endblock %}
+              </div><!--torso-->
+           </div>
+           <div class="span-24 last">
+              <div id="footer">
+                {% block footer %}
+                &copy;2018 Tai Sakuma, <a href="https://github.com/TaiSakuma/cmsbook_bind" target="_blank">cmsbook_bind</a>
+                {% endblock %}
+              </div><!--footer-->
             </div>
         </div><!--container -->
+        {% endblock %}
     </body>
 </html>
