@@ -7,7 +7,26 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    subheadernavi = ''.join(make_subhead_navi(topcontents, ''))
+    return render_template('index.html', subheadernavi=subheadernavi)
+
+topcontents = [
+	dict(head='Conferences', localonly=True, parentdir='conferences', href='../../conferences/s0000_index_001'),
+	dict(separator=True),
+	dict(head='Publications', localonly=True, parentdir='publications', href='../../publications/s0000_index_001'),
+	dict(separator=True),
+	dict(head='Meetings', localonly=True, parentdir='meetings', href='../../meetings/s0000_index_001'),
+	dict(separator=True),
+	dict(head='Seminars', localonly=True, parentdir='seminars', href='../../Seminars/s0000_index_001'),
+	dict(separator=True),
+	dict(head='CV', localonly=True, parentdir='CV', href='../../CV/s0000_index_001'),
+	dict(separator=True),
+	dict(head='References', localonly=True, parentdir='references', href='../../references/s0000_index_001'),
+	dict(right=True),
+	dict(head='<i class="fas fa-cog"></i>', parentdir='help', href ='../../help/s0000_index_001'),
+	dict(separator=True),
+	dict(head='<i class="fas fa-inbox"></i>', parentdir='scratch', href ='../../scratch/s0000_index_001'),
+]
 
 def make_subhead_navi(topcontents, parentdir):
     ret = [ ]
