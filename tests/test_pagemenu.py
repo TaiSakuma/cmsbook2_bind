@@ -1,7 +1,7 @@
 # Tai Sakuma <tai.sakuma@gmail.com>
 import pytest
 
-from cmsbook2.pagemenu import make_pagemenu, make_pagemenu_item
+from cmsbook2.pagemenu import make_pagemenu, _render_item
 
 ##__________________________________________________________________||
 params = [
@@ -72,8 +72,8 @@ params = [
 ]
 
 @pytest.mark.parametrize('item, expected', params)
-def test_make_pagemenu_item(item, expected):
-    assert expected == make_pagemenu_item(item)
+def test_render_item(item, expected):
+    assert expected == _render_item(item)
 
 
 ##__________________________________________________________________||
