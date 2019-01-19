@@ -2,13 +2,32 @@
 
 ##__________________________________________________________________||
 def make_pagemenu(contents, thisdir, thisfile):
-
     contents = _expand_contents(contents, thisdir, thisfile)
     return _render_contents(contents)
 
+##__________________________________________________________________||
 def _expand_contents(contents, thisdir, thisfile):
-    return contents
+    contents = _add_href(contents)
 
+def _add_href(contents):
+    return [_add_href_item(i) for i in contents]
+
+def _add_href_item(item):
+    item = item.copy()
+    if 'href' not in item:
+        if 'dir' in item:
+            if 'file' in item:
+                item['href'] = '../{}/{}'.format(item['dir'], item['file'])
+            else:
+                item['href'] = '../{}/'.format(item['dir'])
+        elif 'file' in item:
+                item['href'] = '../{}'.format(item['file'])
+
+    if 'subcontents' in item:
+        item['subcontents'] = _add_href(item['subcontents'])
+    return item
+
+##__________________________________________________________________||
 def _render_contents(contents):
     ret = [ ]
     ret.append('<ul>')
