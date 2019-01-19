@@ -54,7 +54,7 @@ def test_make_pagemenu(contents, thisdir, thisfile, expected):
 params = [
     pytest.param(
         dict(head="inbox (unsorted)", dir='inbox', file='md.php?md=web.md', lock=False),
-        ['<li class=""><div><a href="../inbox/md.php?md=web.md">&nbsp;&nbsp;inbox (unsorted)</a></div></li>']
+        ['<li><div><a href="../inbox/md.php?md=web.md">&nbsp;&nbsp;inbox (unsorted)</a></div></li>']
     ),
     pytest.param(
         dict(head="Statistics", dir='statistics', file='md.php?md=web.md', lock=False,
@@ -63,8 +63,9 @@ params = [
              ]
         ),
         [
-            '<li class=" has_subcontents"><div><a href="../statistics/md.php?md=web.md">&nbsp;&nbsp;Statistics</a></div><ul>',
-            '<li class=""><div><a href="../statistics/md.php?md=asimov.md">&nbsp;&nbsp;Asimov</a></div></li>',
+            '<li class="has_subcontents"><div><a href="../statistics/md.php?md=web.md">&nbsp;&nbsp;Statistics</a></div>',
+            '<ul>',
+            '<li><div><a href="../statistics/md.php?md=asimov.md">&nbsp;&nbsp;Asimov</a></div></li>',
             '</ul>',
             '</li>',
         ]

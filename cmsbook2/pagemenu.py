@@ -18,11 +18,38 @@ def _render_contents(contents):
     return ret
 
 def _render_item(item):
-    ret = [ ]
+
+    # label
     label = '&nbsp;&nbsp;{}'.format(item['head'])
+
+    # li
+    li_classes = [ ]
+
+    if 'subcontents' in item:
+        li_classes.append('has_subcontents')
+
+    li_attributes = [ ]
+    if li_classes:
+        li_attributes.append('class="{}"'.format(' '.join(li_classes)))
+
+    # a
     href = '../{}/{}'.format(item['dir'], item['file'])
-    print('subcontents' in item)
-    ret.extend(['<li class=""><div><a href="{}">{}</a></div></li>'.format(href, label)])
+
+    if not 'subcontents' in item:
+        return [
+            '<{}><div><a href="{}">{}</a></div></li>'.format(
+                " ".join(['li'] + li_attributes), href, label
+            )
+        ]
+
+    ret = [ ]
+    ret.append(
+        '<{}><div><a href="{}">{}</a></div>'.format(
+            " ".join(['li'] + li_attributes), href, label
+        )
+    )
+    ret.extend(_render_contents(item['subcontents']))
+    ret.append('</li>')
     return ret
 
 ##__________________________________________________________________||
