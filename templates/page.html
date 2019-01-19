@@ -1,11 +1,19 @@
 {% extends "base.html" %}
 
 {% block torso %}
-<div class="span-24 last">
-    <div id="content">
-        <article class="markdown-body"><p>cmsbook in Documents</p></article>
-        <div class="clear">
-        </div>
-    </div><!--content-->
+<div class="span-6 border" id="pagemenucolumn">
+    <div id="pagemenutitle">
+        {{ pagemenutitle|safe }}
+    </div>
+    <div id="pagemenu">
+        {{ pagemenu|safe }}
+        <script type="text/javascript">
+         $(document).ready(function() {
+	           if ($("#pagemenucolumn").height() < $("#contentcolumn").height()) {
+	               $("#pagemenucolumn").css("height", $("#contentcolumn").height());
+	           }
+         });
+        </script>
+    </div><!--pagemenu-->
 </div>
 {% endblock %}
