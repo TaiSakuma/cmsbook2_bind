@@ -80,6 +80,9 @@ def _render_item(item):
     if 'subcontents' in item:
         li_classes.append('has_subcontents')
 
+    if item.get('thisfile', False):
+        li_classes.append('selected')
+
     li_attributes = [ ]
     if li_classes:
         li_attributes.append('class="{}"'.format(' '.join(li_classes)))
@@ -88,7 +91,15 @@ def _render_item(item):
     label = '&nbsp;&nbsp;{}'.format(item['head'])
 
     if 'href' in item:
-        label = '<a href="{}">{}</a>'.format(item['href'], label)
+        a_classes = [ ]
+        if item.get('thisfile', False):
+            a_classes.append('selected')
+        a_attributes = [ ]
+        a_attributes.append('href="{}"'.format(item['href']))
+        if a_classes:
+            a_attributes.append('class="{}"'.format(' '.join(a_classes)))
+        label = '<{}>{}</a>'.format(
+            " ".join(['a'] + a_attributes), label)
 
     if not 'subcontents' in item:
         return [

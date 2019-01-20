@@ -14,6 +14,10 @@ params = [
         ['<li><div>&nbsp;&nbsp;headAAA</div></li>'],
         id='no-href'),
     pytest.param(
+        dict(head="headAAA", href='hrefAAA', thisfile=True, lock=False),
+        ['<li class="selected"><div><a href="hrefAAA" class="selected">&nbsp;&nbsp;headAAA</a></div></li>'],
+        id='thisfile'),
+    pytest.param(
         dict(head="headAAA", href='hrefAAA', lock=False,
              subcontents=[
                  dict(head="headBBB", href='hrefBBB', lock=False),
