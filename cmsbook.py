@@ -2,6 +2,7 @@
 # FLASK_APP=cmsbook.py FLASK_DEBUG=1 flask run
 # http://127.0.0.1:5000/
 from flask import Flask, render_template
+from cmsbook2.pagemenu import make_pagemenu
 
 app = Flask(__name__)
 
@@ -16,6 +17,8 @@ def page(path):
     parentdir = path_items[0]
     subheadernavi = ''.join(make_subhead_navi(topcontents, parentdir=parentdir))
     pagemenutitle = '<a href="../../references/s0000_index_001" class="selected">References</a>'
+    thisfile = ''
+    pagemenu = ''.join(make_pagemenu(contents, parentdir, thisfile))
     return render_template(
         'page.html',
         subheadernavi=subheadernavi,
@@ -23,25 +26,23 @@ def page(path):
         pagemenu=pagemenu
     )
 
-pagemenu = """
-        <ul>
-            <li class=""><div><a href="../inbox/md.php?md=web.md">&nbsp;&nbsp;inbox (unsorted)</a></div></li>
-            <li class=""><div><a href="../CMS/md.php?md=web.md">&nbsp;&nbsp;CMS</a></div></li>
-            <li class=""><div><a href="../ATLAS/md.php?md=web.md">&nbsp;&nbsp;ATLAS</a></div></li>
-            <li class=""><div><a href="../LHC/md.php?md=web.md">&nbsp;&nbsp;LHC</a></div></li>
-            <li class=""><div><a href="../PDG/md.php?md=web.md">&nbsp;&nbsp;PDG</a></div></li>
-
-            <li class=" has_subcontents"><div><a href="../statistics/md.php?md=web.md">&nbsp;&nbsp;Statistics</a></div><ul>
-                <li class=""><div><a href="../statistics/md.php?md=asimov.md">&nbsp;&nbsp;Asimov</a></div></li>
-            </ul>
-            </li>
-            <li class=""><div><a href="../LPCC/md.php?md=web.md">&nbsp;&nbsp;LPCC LHC WGs</a></div></li>
-            <li class=""><div><a href="../LHCHXSWG/md.php?md=web.md">&nbsp;&nbsp;LHC Higgs Xsec WG</a></div></li>
-            <li class=""><div><a href="../SUSY/md.php?md=web.md">&nbsp;&nbsp;SUSY</a></div></li>
-            <li class=""><div><a href="../DarkMatter/md.php?md=web.md">&nbsp;&nbsp;Dark Matter</a></div></li>
-            <li class=" selected"><div><a href="../MachineLearning/md.php?md=web.md" class="selected">&nbsp;&nbsp;Machine Learning</a></div></li>
-        </ul>
-"""
+contents = [
+    dict(head="inbox (unsorted)", dir='inbox', file='md.php?md=web.md', lock=False),
+    dict(head="CMS", dir='CMS', file='md.php?md=web.md', lock=False),
+    dict(head="ATLAS", dir='ATLAS', file='md.php?md=web.md', lock=False),
+    dict(head="LHC", dir='LHC', file='md.php?md=web.md', lock=False),
+    dict(head="PDG", dir='PDG', file='md.php?md=web.md', lock=False),
+    dict(head="Statistics", dir='statistics', file='md.php?md=web.md', lock=False,
+         subcontents=[
+             dict(head="Asimov", dir='statistics', file='md.php?md=asimov.md', lock=False),
+         ]
+    ),
+    dict(head="LPCC LHC WGs", dir='LPCC', file='md.php?md=web.md', lock=False),
+    dict(head="LHC Higgs Xsec WG", dir='LHCHXSWG', file='md.php?md=web.md', lock=False),
+    dict(head="SUSY", dir='SUSY', file='md.php?md=web.md', lock=False),
+    dict(head="Dark Matter", dir='DarkMatter', file='md.php?md=web.md', lock=False),
+    dict(head="Machine Learning", dir='MachineLearning', file='md.php?md=web.md', lock=False),
+]
 
 topcontents = [
 	dict(head='Conferences', localonly=True, parentdir='conferences', href='../../conferences/s0000_index_001'),
