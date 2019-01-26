@@ -8,11 +8,11 @@ import importlib.util
 app = Flask(__name__)
 
 def load_chapter_lists():
-    spec = importlib.util.spec_from_file_location('contents', '/Users/sakuma/Dropbox/cmsbook/cmsbook2_config/contents.py')
-    contents = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(contents)
-    return contents.contents
-
+    path = '/Users/sakuma/Dropbox/cmsbook/cmsbook2_config/chapters.py'
+    spec = importlib.util.spec_from_file_location('chapters', path)
+    chapters = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(chapters)
+    return chapters.chapters
 
 @app.route('/')
 def index():
