@@ -1,8 +1,8 @@
 # how to run:
-# FLASK_APP=cmsbook.py FLASK_DEBUG=1 flask run
+# FLASK_APP=cmsbook2/cmsbook2.py FLASK_DEBUG=1 flask run
 # http://127.0.0.1:5000/
 from flask import Flask, render_template
-from cmsbook2.pagemenu import make_pagemenu
+from .pagemenu import make_pagemenu
 
 app = Flask(__name__)
 
