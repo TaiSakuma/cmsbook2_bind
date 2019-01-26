@@ -1,7 +1,7 @@
 # Tai Sakuma <tai.sakuma@gmail.com>
 import pytest
 
-from cmsbook import make_subhead_navi, make_subhead_navi_item
+from cmsbook2.cmsbook2 import make_subhead_navi, make_subhead_navi_item
 
 ##__________________________________________________________________||
 params = [
