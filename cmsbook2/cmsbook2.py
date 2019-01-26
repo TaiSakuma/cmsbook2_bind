@@ -7,7 +7,7 @@ import importlib.util
 
 app = Flask(__name__)
 
-def load_contents():
+def load_chapter_lists():
     spec = importlib.util.spec_from_file_location('contents', '/Users/sakuma/Dropbox/cmsbook/cmsbook2_config/contents.py')
     contents = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(contents)
@@ -16,16 +16,16 @@ def load_contents():
 
 @app.route('/')
 def index():
-    topcontents = load_contents()
-    subheadernavi = ''.join(make_subhead_navi(topcontents, ''))
+    chapters = load_chapter_lists()
+    subheadernavi = ''.join(make_subhead_navi(chapters, ''))
     return render_template('index.html', subheadernavi=subheadernavi)
 
 @app.route('/<path:path>')
 def page(path):
-    topcontents = load_contents()
+    chapters = load_chapter_lists()
     path_items = path.split('/')
     parentdir = path_items[0]
-    subheadernavi = ''.join(make_subhead_navi(topcontents, parentdir=parentdir))
+    subheadernavi = ''.join(make_subhead_navi(chapters, parentdir=parentdir))
     pagemenutitle = '<a href="../../references/s0000_index_001" class="selected">References</a>'
     thisfile = ''
     pagemenu = ''.join(make_pagemenu(contents, parentdir, thisfile))
@@ -54,10 +54,10 @@ contents = [
     dict(head="Machine Learning", dir='MachineLearning', file='md.php?md=web.md', lock=False),
 ]
 
-def make_subhead_navi(topcontents, parentdir):
+def make_subhead_navi(chapters, parentdir):
     ret = [ ]
     right = False
-    for item in topcontents:
+    for item in chapters:
         if 'right' in item and item['right']:
             if right:
                 continue
