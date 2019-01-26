@@ -3,16 +3,26 @@
 # http://127.0.0.1:5000/
 from flask import Flask, render_template
 from .pagemenu import make_pagemenu
+import importlib.util
 
 app = Flask(__name__)
 
+def load_contents():
+    spec = importlib.util.spec_from_file_location('contents', '/Users/sakuma/Dropbox/cmsbook/cmsbook2_config/contents.py')
+    contents = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(contents)
+    return contents.contents
+
+
 @app.route('/')
 def index():
+    topcontents = load_contents()
     subheadernavi = ''.join(make_subhead_navi(topcontents, ''))
     return render_template('index.html', subheadernavi=subheadernavi)
 
 @app.route('/<path:path>')
 def page(path):
+    topcontents = load_contents()
     path_items = path.split('/')
     parentdir = path_items[0]
     subheadernavi = ''.join(make_subhead_navi(topcontents, parentdir=parentdir))
@@ -42,24 +52,6 @@ contents = [
     dict(head="SUSY", dir='SUSY', file='md.php?md=web.md', lock=False),
     dict(head="Dark Matter", dir='DarkMatter', file='md.php?md=web.md', lock=False),
     dict(head="Machine Learning", dir='MachineLearning', file='md.php?md=web.md', lock=False),
-]
-
-topcontents = [
-	dict(head='Conferences', localonly=True, parentdir='conferences', href='../../conferences/s0000_index_001'),
-	dict(separator=True),
-	dict(head='Publications', localonly=True, parentdir='publications', href='../../publications/s0000_index_001'),
-	dict(separator=True),
-	dict(head='Meetings', localonly=True, parentdir='meetings', href='../../meetings/s0000_index_001'),
-	dict(separator=True),
-	dict(head='Seminars', localonly=True, parentdir='seminars', href='../../Seminars/s0000_index_001'),
-	dict(separator=True),
-	dict(head='CV', localonly=True, parentdir='CV', href='../../CV/s0000_index_001'),
-	dict(separator=True),
-	dict(head='References', localonly=True, parentdir='references', href='../../references/s0000_index_001'),
-	dict(right=True),
-	dict(head='<i class="fas fa-cog"></i>', parentdir='help', href ='../../help/s0000_index_001'),
-	dict(separator=True),
-	dict(head='<i class="fas fa-inbox"></i>', parentdir='scratch', href ='../../scratch/s0000_index_001'),
 ]
 
 def make_subhead_navi(topcontents, parentdir):
