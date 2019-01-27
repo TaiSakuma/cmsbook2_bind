@@ -44,3 +44,28 @@ def make_subhead_navi_item(item, parentdir):
     return ret
 
 ##__________________________________________________________________||
+def _expand_item(item, path):
+
+    if not item:
+        return
+
+    if 'separator' in item:
+        return
+
+    if 'linebreak' in item:
+        return
+
+    default = dict(title=None, path=None, urlpath=None, localonly=False, lock=False)
+    for k, v in default.items():
+        item[k] = item.get(k, v)
+
+    if item['title'] is None:
+        item['title'] = item['path']
+
+    if item['title'] is None:
+        item['title'] = item['urlpath']
+
+    if item['urlpath'] is None:
+        item['urlpath'] = item['path']
+
+##__________________________________________________________________||

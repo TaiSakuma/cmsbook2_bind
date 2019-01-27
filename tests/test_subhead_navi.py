@@ -2,6 +2,7 @@
 import pytest
 
 from cmsbook2.subhead_navi import make_subhead_navi, make_subhead_navi_item
+from cmsbook2.subhead_navi import _expand_item
 
 ##__________________________________________________________________||
 params = [
@@ -58,41 +59,80 @@ def test_make_subhead_navi(topcontents, parentdir, expected):
 
 ##__________________________________________________________________||
 params = [
+
+    ###
     pytest.param(
-        dict(head='head', parentdir='parentdir', href='href'),
-        'cmsbook_home',
-        '<a href="href">head</a>',
-        id='minimum'),
+        dict(path='chapter_1'),
+        'dir0',
+        dict(title='chapter_1', path='chapter_1', urlpath='chapter_1', localonly=False, lock=False),
+        id='path-only'),
     pytest.param(
-        dict(head='head', parentdir='parentdir', href='href'),
-        'parentdir',
-        '<a href="href" class="selected">head</a>',
-        id='selected'),
+        dict(title='Chapter 1'),
+        'dir0',
+        dict(title='Chapter 1', path=None, urlpath=None, localonly=False, lock=False),
+        id='title-only'),
     pytest.param(
-        dict(head='head', localonly=True, parentdir='parentdir', href='href'),
-        'cmsbook_home',
-        '<a href="href"><i class="fas fa-home fa-xs"></i>&nbsp;head</a>',
-        id='localonly'),
+        dict(title='Chapter 1', path='chapter_1'),
+        'dir0',
+        dict(title='Chapter 1', path='chapter_1', urlpath='chapter_1', localonly=False, lock=False),
+        id='typical'),
     pytest.param(
-        dict(head='head', lock=True, parentdir='parentdir', href='href'),
-        'cmsbook_home',
-        '<a href="href"><i class="fas fa-lock fa-xs"></i>&nbsp;head</a>',
-        id='lock'),
+        dict(title='Chapter 1', path='chapter_1', urlpath='ch1'),
+        'dir0',
+        dict(title='Chapter 1', path='chapter_1', urlpath='ch1', localonly=False, lock=False),
+        id='urlpath'),
     pytest.param(
-        dict(head='head', localonly=True, lock=True, parentdir='parentdir', href='href'),
-        'cmsbook_home',
-        '<a href="href"><i class="fas fa-home fa-xs"></i>&nbsp;<i class="fas fa-lock fa-xs"></i>&nbsp;head</a>',
-        id='localonly-lock'),
+        dict(title='Chapter 1', urlpath='ch1'),
+        'dir0',
+        dict(title='Chapter 1', path=None, urlpath='ch1', localonly=False, lock=False),
+        id='title-urlpath-only'),
     pytest.param(
-        dict(head='Conferences', localonly=True, parentdir='conferences', href='../../conferences/s0000_index_001'),
-        'cmsbook_home',
-        '<a href="../../conferences/s0000_index_001"><i class="fas fa-home fa-xs"></i>&nbsp;Conferences</a>',
-        id='one-item'),
+        dict(urlpath='ch1'),
+        'dir0',
+        dict(title='ch1', path=None, urlpath='ch1', localonly=False, lock=False),
+        id='urlpath-only'),
+
+    ###
     pytest.param(
-        dict(separator=True),
-        'cmsbook_home',
-        '<span> // </span>',
-        id='separator'),
+        dict(title='Chapter 1', path='chapter_1', localonly=True),
+        'dir0',
+        dict(title='Chapter 1', path='chapter_1', urlpath='chapter_1', localonly=True, lock=False),
+        id='localonly-True'),
+    pytest.param(
+        dict(title='Chapter 1', path='chapter_1', localonly=False),
+        'dir0',
+        dict(title='Chapter 1', path='chapter_1', urlpath='chapter_1', localonly=False, lock=False),
+        id='localonly-false'),
+
+    ###
+    pytest.param(
+        dict(title='Chapter 1', path='chapter_1', lock=True),
+        'dir0',
+        dict(title='Chapter 1', path='chapter_1', urlpath='chapter_1', localonly=False, lock=True),
+        id='lock-True'),
+    pytest.param(
+        dict(title='Chapter 1', path='chapter_1', lock=False),
+        'dir0',
+        dict(title='Chapter 1', path='chapter_1', urlpath='chapter_1', localonly=False, lock=False),
+        id='lock-false'),
+
+    ###
+    pytest.param(dict(), 'dir0', dict(), id='empty'),
+    pytest.param(dict(separator=True), 'dir0', dict(separator=True), id='separator'),
+    pytest.param(dict(linebreak=True), 'dir0', dict(linebreak=True), id='linebreak'),
+    pytest.param(
+        dict(separator=True, linebreak=True),
+        'dir0',
+        dict(separator=True, linebreak=True),
+        id='separator-linebreak'),
+]
+
+@pytest.mark.parametrize('item, path, expected', params)
+def test_expand_item(item, path, expected):
+    _expand_item(item, path)
+    assert expected == item
+
+
     pytest.param(
         dict(br=True),
         'cmsbook_home',
