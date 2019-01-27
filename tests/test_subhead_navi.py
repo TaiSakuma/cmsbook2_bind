@@ -2,6 +2,7 @@
 import pytest
 
 from cmsbook2.subhead_navi import make_subhead_navi, make_subhead_navi_item
+from cmsbook2.subhead_navi import _copy
 from cmsbook2.subhead_navi import _expand_item
 from cmsbook2.subhead_navi import _render_item
 
@@ -57,6 +58,23 @@ params = [
 @pytest.mark.parametrize('topcontents, parentdir, expected', params)
 def test_make_subhead_navi(topcontents, parentdir, expected):
     assert expected == make_subhead_navi(topcontents, parentdir)
+
+##__________________________________________________________________||
+params = [
+    [ ],
+    [dict(A="AAA", B="BBB"), ],
+    [dict(A="AAA", B="BBB"), dict()],
+    [dict(A="AAA", B="BBB"), dict(A="aaa", B="bbb"), ],
+]
+
+@pytest.mark.parametrize('items', params)
+def test_copy(items):
+    copy = _copy(items)
+    assert copy == items
+    assert copy is not items
+    for item_copy, item_original in zip(copy, items):
+        assert item_copy == item_original
+        assert item_copy is not item_original
 
 ##__________________________________________________________________||
 params = [

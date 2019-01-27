@@ -44,6 +44,14 @@ def make_subhead_navi_item(item, parentdir):
     return ret
 
 ##__________________________________________________________________||
+def _copy(items):
+    """return a copy of a list of dicts
+
+    This function is used instead of the very slow copy.deepcopy().
+    """
+    return [i.copy() for i in items]
+
+##__________________________________________________________________||
 def _expand_item(item, path):
 
     if not item:
