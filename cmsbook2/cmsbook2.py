@@ -1,6 +1,7 @@
 # how to run:
 # FLASK_APP=cmsbook2/cmsbook2.py FLASK_DEBUG=1 flask run
 # http://127.0.0.1:5000/
+import os
 from flask import Flask, render_template
 import importlib.util
 
@@ -9,15 +10,17 @@ from .subhead_navi import make_subhead_navi
 
 app = Flask(__name__)
 
+cmsbook_path = '/Users/sakuma/Dropbox/cmsbook'
+
 def load_chapter_lists():
-    path = '/Users/sakuma/Dropbox/cmsbook/cmsbook2_config/chapters.py'
+    path = os.path.join(cmsbook_path, 'cmsbook2_config', 'chapters.py')
     spec = importlib.util.spec_from_file_location('chapters', path)
     chapters = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(chapters)
     return chapters.chapters
 
-def load_section_lists():
-    path = '/Users/sakuma/Dropbox/cmsbook/references/cmsbook2_chapter/sections.py'
+def load_section_lists(chapter_path):
+    path = os.path.join(cmsbook_path, chapter_path, 'cmsbook2_chapter', 'sections.py')
     spec = importlib.util.spec_from_file_location('sections', path)
     sections = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(sections)
@@ -33,12 +36,12 @@ def index():
 def page(path):
     chapters = load_chapter_lists()
     path_items = path.split('/')
-    parentdir = path_items[0]
-    subheadernavi = ''.join(make_subhead_navi(chapters, parentdir=parentdir))
+    chapter_path = path_items[0]
+    subheadernavi = ''.join(make_subhead_navi(chapters, chapter_path))
     pagemenutitle = '<a href="../../references/s0000_index_001" class="selected">References</a>'
     thisfile = ''
-    sections = load_section_lists()
-    pagemenu = ''.join(make_pagemenu(sections, parentdir, thisfile))
+    sections = load_section_lists(chapter_path)
+    pagemenu = ''.join(make_pagemenu(sections, chapter_path, thisfile))
     return render_template(
         'page.html',
         subheadernavi=subheadernavi,
