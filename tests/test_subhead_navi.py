@@ -195,13 +195,7 @@ params = [
 
     ###
     pytest.param(dict(), 'dir0', dict(), id='empty'),
-    pytest.param(dict(separator=True), 'dir0', dict(separator=True), id='separator'),
     pytest.param(dict(linebreak=True), 'dir0', dict(linebreak=True), id='linebreak'),
-    pytest.param(
-        dict(separator=True, linebreak=True),
-        'dir0',
-        dict(separator=True, linebreak=True),
-        id='separator-linebreak'),
 ]
 
 @pytest.mark.parametrize('item, path, expected', params)
@@ -246,11 +240,6 @@ params = [
 
     ###
     pytest.param(dict(), '', id='empty'),
-    pytest.param(dict(separator=True), '<span> // </span>', id='separator'),
-    pytest.param(dict(linebreak=True), '<br />', id='linebreak'),
-    pytest.param(
-        dict(separator=True, linebreak=True), '<br />',
-        id='separator-linepbreak'),
 ]
 
 @pytest.mark.parametrize('item, expected', params)

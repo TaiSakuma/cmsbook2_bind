@@ -50,9 +50,6 @@ def _expand_item(item, path):
     if not item:
         return
 
-    if 'separator' in item:
-        return
-
     if 'linebreak' in item:
         return
 
@@ -81,12 +78,6 @@ def _render_item(item):
 
     if not item:
         return ''
-
-    if 'linebreak' in item and item['linebreak']:
-        return '<br />'
-
-    if 'separator' in item and item['separator']:
-        return '<span> // </span>'
 
     icons = [ ]
     if item['localonly']:
