@@ -76,3 +76,33 @@ def _expand_item(item, path):
         item['selected'] = True
 
 ##__________________________________________________________________||
+def _render_item(item):
+
+    if not item:
+        return ''
+
+    if 'linebreak' in item and item['linebreak']:
+        return '<br />'
+
+    if 'separator' in item and item['separator']:
+        return '<span> // </span>'
+
+    icons = [ ]
+    if item['localonly']:
+        icons.append('<i class="fas fa-home fa-xs"></i>&nbsp;')
+    if item['lock']:
+        icons.append('<i class="fas fa-lock fa-xs"></i>&nbsp;')
+    icons = ''.join(icons)
+    label = '{icons}{head}'.format(icons=icons, head=item['title'])
+
+    attributes = [ ]
+    attributes.append('href="{}"'.format(item['urlpath']))
+    if item['selected']:
+        attributes.append('class="selected"')
+    attributes = ' '.join(attributes)
+
+    ret = '<a {}>{}</a>'.format(attributes, label)
+
+    return ret
+
+##__________________________________________________________________||

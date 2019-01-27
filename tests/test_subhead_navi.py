@@ -3,6 +3,7 @@ import pytest
 
 from cmsbook2.subhead_navi import make_subhead_navi, make_subhead_navi_item
 from cmsbook2.subhead_navi import _expand_item
+from cmsbook2.subhead_navi import _render_item
 
 ##__________________________________________________________________||
 params = [
@@ -175,6 +176,54 @@ def test_expand_item(item, path, expected):
     _expand_item(item, path)
     assert expected == item
 
+##__________________________________________________________________||
+params = [
+
+    ###
+    pytest.param(
+        dict(title='Chapter 1', path='chapter_1', urlpath='chapter_1',
+             selected=False,
+             localonly=False, lock=False),
+        '<a href="chapter_1">Chapter 1</a>',
+        id='typical'),
+    pytest.param(
+        dict(title='Chapter 1', path='chapter_1', urlpath='chapter_1',
+             selected=True,
+             localonly=False, lock=False),
+        '<a href="chapter_1" class="selected">Chapter 1</a>',
+        id='selected'),
+    pytest.param(
+        dict(title='Chapter 1', path='chapter_1', urlpath='chapter_1',
+             selected=False,
+             localonly=True, lock=False),
+        '<a href="chapter_1"><i class="fas fa-home fa-xs"></i>&nbsp;Chapter 1</a>',
+        id='localonly'),
+    pytest.param(
+        dict(title='Chapter 1', path='chapter_1', urlpath='chapter_1',
+             selected=False,
+             localonly=False, lock=True),
+        '<a href="chapter_1"><i class="fas fa-lock fa-xs"></i>&nbsp;Chapter 1</a>',
+        id='lock'),
+    pytest.param(
+        dict(title='Chapter 1', path='chapter_1', urlpath='chapter_1',
+             selected=False,
+             localonly=True, lock=True),
+        '<a href="chapter_1"><i class="fas fa-home fa-xs"></i>&nbsp;<i class="fas fa-lock fa-xs"></i>&nbsp;Chapter 1</a>',
+        id='localonly-lock'),
+
+    ###
+    pytest.param(dict(), '', id='empty'),
+    pytest.param(dict(separator=True), '<span> // </span>', id='separator'),
+    pytest.param(dict(linebreak=True), '<br />', id='linebreak'),
+    pytest.param(
+        dict(separator=True, linebreak=True), '<br />',
+        id='separator-linepbreak'),
+]
+
+@pytest.mark.parametrize('item, expected', params)
+def test_render_item(item, expected):
+    actual = _render_item(item)
+    assert expected == actual
 
     pytest.param(
         dict(br=True),
