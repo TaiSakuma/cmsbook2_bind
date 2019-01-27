@@ -55,7 +55,11 @@ def _expand_item(item, path):
     if 'linebreak' in item:
         return
 
-    default = dict(title=None, path=None, urlpath=None, localonly=False, lock=False)
+    default = dict(
+        title=None, path=None, urlpath=None,
+        selected=False,
+        localonly=False, lock=False,
+    )
     for k, v in default.items():
         item[k] = item.get(k, v)
 
@@ -67,5 +71,8 @@ def _expand_item(item, path):
 
     if item['urlpath'] is None:
         item['urlpath'] = item['path']
+
+    if path == item['path']:
+        item['selected'] = True
 
 ##__________________________________________________________________||

@@ -64,56 +64,99 @@ params = [
     pytest.param(
         dict(path='chapter_1'),
         'dir0',
-        dict(title='chapter_1', path='chapter_1', urlpath='chapter_1', localonly=False, lock=False),
+        dict(title='chapter_1', path='chapter_1', urlpath='chapter_1',
+             selected=False,
+             localonly=False, lock=False),
         id='path-only'),
     pytest.param(
         dict(title='Chapter 1'),
         'dir0',
-        dict(title='Chapter 1', path=None, urlpath=None, localonly=False, lock=False),
+        dict(title='Chapter 1', path=None, urlpath=None,
+             selected=False,
+             localonly=False, lock=False),
         id='title-only'),
     pytest.param(
         dict(title='Chapter 1', path='chapter_1'),
         'dir0',
-        dict(title='Chapter 1', path='chapter_1', urlpath='chapter_1', localonly=False, lock=False),
+        dict(title='Chapter 1', path='chapter_1', urlpath='chapter_1',
+             selected=False,
+             localonly=False, lock=False),
         id='typical'),
     pytest.param(
         dict(title='Chapter 1', path='chapter_1', urlpath='ch1'),
         'dir0',
-        dict(title='Chapter 1', path='chapter_1', urlpath='ch1', localonly=False, lock=False),
+        dict(title='Chapter 1', path='chapter_1', urlpath='ch1',
+             selected=False,
+             localonly=False, lock=False),
         id='urlpath'),
     pytest.param(
         dict(title='Chapter 1', urlpath='ch1'),
         'dir0',
-        dict(title='Chapter 1', path=None, urlpath='ch1', localonly=False, lock=False),
+        dict(title='Chapter 1', path=None, urlpath='ch1',
+             selected=False,
+             localonly=False, lock=False),
         id='title-urlpath-only'),
     pytest.param(
         dict(urlpath='ch1'),
         'dir0',
-        dict(title='ch1', path=None, urlpath='ch1', localonly=False, lock=False),
+        dict(title='ch1', path=None, urlpath='ch1',
+             selected=False,
+             localonly=False, lock=False),
         id='urlpath-only'),
+
+    ###
+    pytest.param(
+        dict(title='Chapter 1', path='chapter_1'),
+        'chapter_1',
+        dict(title='Chapter 1', path='chapter_1', urlpath='chapter_1',
+             selected=True,
+             localonly=False, lock=False),
+        id='selected'),
+    pytest.param(
+        dict(title='Chapter 1', path='chapter_1', urlpath='ch1'),
+        'chapter_1',
+        dict(title='Chapter 1', path='chapter_1', urlpath='ch1',
+             selected=True,
+             localonly=False, lock=False),
+        id='selected-urlpath'),
+    pytest.param(
+        dict(title='Chapter 1', path='chapter_1', urlpath='ch1'),
+        'ch1',
+        dict(title='Chapter 1', path='chapter_1', urlpath='ch1',
+             selected=False,
+             localonly=False, lock=False),
+        id='selected-urlpath-false'),
 
     ###
     pytest.param(
         dict(title='Chapter 1', path='chapter_1', localonly=True),
         'dir0',
-        dict(title='Chapter 1', path='chapter_1', urlpath='chapter_1', localonly=True, lock=False),
+        dict(title='Chapter 1', path='chapter_1', urlpath='chapter_1',
+             selected=False,
+             localonly=True, lock=False),
         id='localonly-True'),
     pytest.param(
         dict(title='Chapter 1', path='chapter_1', localonly=False),
         'dir0',
-        dict(title='Chapter 1', path='chapter_1', urlpath='chapter_1', localonly=False, lock=False),
+        dict(title='Chapter 1', path='chapter_1', urlpath='chapter_1',
+             selected=False,
+             localonly=False, lock=False),
         id='localonly-false'),
 
     ###
     pytest.param(
         dict(title='Chapter 1', path='chapter_1', lock=True),
         'dir0',
-        dict(title='Chapter 1', path='chapter_1', urlpath='chapter_1', localonly=False, lock=True),
+        dict(title='Chapter 1', path='chapter_1', urlpath='chapter_1',
+             selected=False,
+             localonly=False, lock=True),
         id='lock-True'),
     pytest.param(
         dict(title='Chapter 1', path='chapter_1', lock=False),
         'dir0',
-        dict(title='Chapter 1', path='chapter_1', urlpath='chapter_1', localonly=False, lock=False),
+        dict(title='Chapter 1', path='chapter_1', urlpath='chapter_1',
+             selected=False,
+             localonly=False, lock=False),
         id='lock-false'),
 
     ###
