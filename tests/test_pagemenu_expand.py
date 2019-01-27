@@ -23,14 +23,19 @@ params = [
 @pytest.mark.parametrize('contents', params)
 def test_copy_contents(contents):
     copy = _copy_contents(contents)
+    assert copy == contents
     assert copy is not contents
     for item_copy, item_original in zip(copy, contents):
+        assert item_copy == item_original
         assert item_copy is not item_original
         if 'subcontents' in item_original:
+            assert item_copy['subcontents'] == item_original['subcontents']
             assert item_copy['subcontents'] is not item_original['subcontents']
             for item_copy2, item_original2 in zip(item_copy['subcontents'], item_original['subcontents']):
+                assert item_copy2 == item_original2
                 assert item_copy2 is not item_original2
                 if 'subcontents' in item_original2:
+                    assert item_copy2['subcontents'] == item_original2['subcontents']
                     assert item_copy2['subcontents'] is not item_original2['subcontents']
 
 ##__________________________________________________________________||
