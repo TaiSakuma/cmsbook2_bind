@@ -10,14 +10,26 @@ def make_subhead_navi(chapters, dirpath):
 
     ret = [ ]
     right = False
+    need_separator = False
     for item in chapters:
-        if 'right' in item and item['right']:
+        if item.get('right', False):
             if right:
                 continue
             right = True
             ret.append('<span style="float:right">')
+            need_separator = False
             continue
+        if item.get('linebreak', False):
+            if right:
+                ret.append('</span>')
+                right = False
+            ret.append('<br />')
+            need_separator = False
+            continue
+        if need_separator:
+            ret.append('<span> // </span>')
         ret.append(_render_item(item))
+        need_separator = True
 
     if right:
             ret.append('</span>')
