@@ -11,53 +11,37 @@ params = [
     pytest.param(
         [ ], 'cmsbook_home', [ ], id='empty'),
     pytest.param(
-        [dict(head = 'Conferences', localonly = True, parentdir = 'conferences', href = '../../conferences/s0000_index_001'), ],
+        [dict(title='Conferences', localonly=True, path='conferences'), ],
         'cmsbook_home',
-        ['<a href="../../conferences/s0000_index_001"><i class="fas fa-home fa-xs"></i>&nbsp;Conferences</a>',],
+        ['<a href="conferences"><i class="fas fa-home fa-xs"></i>&nbsp;Conferences</a>',],
         id='one-item'),
     pytest.param(
         [
-	        dict(head='Conferences', localonly=True, parentdir='conferences', href='../../conferences/s0000_index_001'),
+	        dict(title='Conferences', localonly=True, path='conferences'),
 	        dict(separator=True),
-	        dict(head='Publications', localonly=True, parentdir='publications', href='../../publications/s0000_index_001'),
-	        dict(separator=True),
-	        dict(head='Meetings', localonly=True, parentdir='meetings', href='../../meetings/s0000_index_001'),
-	        dict(separator=True),
-	        dict(head='Seminars', localonly=True, parentdir='seminars', href='../../Seminars/s0000_index_001'),
-	        dict(separator=True),
-	        dict(head='CV', localonly=True, parentdir='CV', href='../../CV/s0000_index_001'),
-	        dict(separator=True),
-	        dict(head='References', localonly=True, parentdir='references', href='../../references/s0000_index_001'),
+	        dict(title='Publications', localonly=True, path='publications'),
 	        dict(right=True),
-	        dict(head='<i class="fas fa-cog"></i>', parentdir='help', href ='../../help/s0000_index_001'),
+	        dict(title='<i class="fas fa-cog"></i>', path='help'),
 	        dict(separator=True),
-	        dict(head='<i class="fas fa-inbox"></i>', parentdir='scratch', href ='../../scratch/s0000_index_001'),
+	        dict(title='<i class="fas fa-inbox"></i>', path='scratch'),
         ],
         'cmsbook_home',
         [
-            '<a href="../../conferences/s0000_index_001"><i class="fas fa-home fa-xs"></i>&nbsp;Conferences</a>',
+            '<a href="conferences"><i class="fas fa-home fa-xs"></i>&nbsp;Conferences</a>',
             '<span> // </span>',
-            '<a href="../../publications/s0000_index_001"><i class="fas fa-home fa-xs"></i>&nbsp;Publications</a>',
-            '<span> // </span>',
-            '<a href="../../meetings/s0000_index_001"><i class="fas fa-home fa-xs"></i>&nbsp;Meetings</a>',
-            '<span> // </span>',
-            '<a href="../../Seminars/s0000_index_001"><i class="fas fa-home fa-xs"></i>&nbsp;Seminars</a>',
-            '<span> // </span>',
-            '<a href="../../CV/s0000_index_001"><i class="fas fa-home fa-xs"></i>&nbsp;CV</a>',
-            '<span> // </span>',
-            '<a href="../../references/s0000_index_001"><i class="fas fa-home fa-xs"></i>&nbsp;References</a>',
+            '<a href="publications"><i class="fas fa-home fa-xs"></i>&nbsp;Publications</a>',
             '<span style="float:right">',
-            '<a href="../../help/s0000_index_001"><i class="fas fa-cog"></i></a>',
+            '<a href="help"><i class="fas fa-cog"></i></a>',
             '<span> // </span>',
-            '<a href="../../scratch/s0000_index_001"><i class="fas fa-inbox"></i></a>',
+            '<a href="scratch"><i class="fas fa-inbox"></i></a>',
             '</span>',
         ],
         id='full-example'),
 ]
 
-@pytest.mark.parametrize('topcontents, parentdir, expected', params)
-def test_make_subhead_navi(topcontents, parentdir, expected):
-    assert expected == make_subhead_navi(topcontents, parentdir)
+@pytest.mark.parametrize('chapters, dirpath, expected', params)
+def test_make_subhead_navi(chapters, dirpath, expected):
+    assert expected == make_subhead_navi(chapters, dirpath)
 
 ##__________________________________________________________________||
 params = [

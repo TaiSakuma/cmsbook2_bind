@@ -1,7 +1,13 @@
 # Tai Sakuma <tai.sakuma@gmail.com>
 
 ##__________________________________________________________________||
-def make_subhead_navi(chapters, parentdir):
+def make_subhead_navi(chapters, dirpath):
+
+    chapters = _copy(chapters)
+
+    for item in chapters:
+        _expand_item(item, dirpath)
+
     ret = [ ]
     right = False
     for item in chapters:
@@ -11,14 +17,14 @@ def make_subhead_navi(chapters, parentdir):
             right = True
             ret.append('<span style="float:right">')
             continue
-        ret.append(make_subhead_navi_item(item, parentdir))
+        ret.append(_render_item(item))
 
     if right:
             ret.append('</span>')
 
     return ret
 
-def make_subhead_navi_item(item, parentdir):
+def make_subhead_navi_item(item, dirpath):
 
     if 'br' in item and item['br']:
         return '<br />'
