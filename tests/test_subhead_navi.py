@@ -1,7 +1,7 @@
 # Tai Sakuma <tai.sakuma@gmail.com>
 import pytest
 
-from cmsbook2.subhead_navi import make_subhead_navi, make_subhead_navi_item
+from cmsbook2.subhead_navi import make_subhead_navi
 from cmsbook2.subhead_navi import _copy
 from cmsbook2.subhead_navi import _expand_item
 from cmsbook2.subhead_navi import _render_item
@@ -226,21 +226,5 @@ params = [
 def test_render_item(item, expected):
     actual = _render_item(item)
     assert expected == actual
-
-    pytest.param(
-        dict(br=True),
-        'cmsbook_home',
-        '<br />',
-        id='br'),
-    pytest.param(
-        dict(separator=True, br=True),
-        'cmsbook_home',
-        '<br />', # separator ignored
-        id='br-separator'),
-]
-
-@pytest.mark.parametrize('item, parentdir, expected', params)
-def test_make_subhead_navi_item(item, parentdir, expected):
-    assert expected == make_subhead_navi_item(item, parentdir)
 
 ##__________________________________________________________________||
