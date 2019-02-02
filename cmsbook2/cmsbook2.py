@@ -5,20 +5,15 @@ import os
 from flask import Flask, render_template
 import importlib.util
 
-from .pagemenu import make_pagemenu
+from .chapter import load_chapter_lists
 from .subhead_navi import make_subhead_navi
+from .pagemenu import make_pagemenu
 
 app = Flask(__name__)
 
 cmsbook_path = '/Users/sakuma/Dropbox/cmsbook'
 
-def load_chapter_lists(cmsbook_path):
-    path = os.path.join(cmsbook_path, 'cmsbook2_config', 'chapters.py')
-    spec = importlib.util.spec_from_file_location('chapters', path)
-    chapters = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(chapters)
-    return chapters.chapters
-
+##__________________________________________________________________||
 def load_section_lists(chapter_path):
     path = os.path.join(cmsbook_path, chapter_path, 'cmsbook2_chapter', 'sections.py')
     spec = importlib.util.spec_from_file_location('sections', path)

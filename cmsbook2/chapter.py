@@ -1,4 +1,14 @@
 # Tai Sakuma <tai.sakuma@gmail.com>
+import os
+import importlib.util
+
+##__________________________________________________________________||
+def load_chapter_lists(cmsbook_path):
+    path = os.path.join(cmsbook_path, 'cmsbook2_config', 'chapters.py')
+    spec = importlib.util.spec_from_file_location('chapters', path)
+    chapters = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(chapters)
+    return chapters.chapters
 
 ##__________________________________________________________________||
 def _copy(items):
