@@ -12,7 +12,7 @@ app = Flask(__name__)
 
 cmsbook_path = '/Users/sakuma/Dropbox/cmsbook'
 
-def load_chapter_lists():
+def load_chapter_lists(cmsbook_path):
     path = os.path.join(cmsbook_path, 'cmsbook2_config', 'chapters.py')
     spec = importlib.util.spec_from_file_location('chapters', path)
     chapters = importlib.util.module_from_spec(spec)
@@ -28,13 +28,14 @@ def load_section_lists(chapter_path):
 
 @app.route('/')
 def index():
-    chapters = load_chapter_lists()
+    chapters = load_chapter_lists(cmsbook_path)
     subheadernavi = ''.join(make_subhead_navi(chapters, ''))
     return render_template('index.html', subheadernavi=subheadernavi)
 
 @app.route('/<path:path>')
 def page(path):
-    chapters = load_chapter_lists()
+    chapters = load_chapter_lists(cmsbook_path)
+    print(chapters)
     path_items = path.split('/')
     chapter_path = path_items[0]
     subheadernavi = ''.join(make_subhead_navi(chapters, chapter_path))
