@@ -3,7 +3,13 @@ import os
 import importlib.util
 
 ##__________________________________________________________________||
-def load_chapter_lists(cmsbook_path):
+def load_chapter_lists(cmsbook_path, chapter_path=None):
+    chapters = _load(cmsbook_path)
+    _expand(chapters, chapter_path)
+    return chapters
+
+##__________________________________________________________________||
+def _load(cmsbook_path):
     path = os.path.join(cmsbook_path, 'cmsbook2_config', 'chapters.py')
     spec = importlib.util.spec_from_file_location('chapters', path)
     chapters = importlib.util.module_from_spec(spec)
@@ -17,6 +23,11 @@ def _copy(items):
     This function is used instead of the very slow copy.deepcopy().
     """
     return [i.copy() for i in items]
+
+##__________________________________________________________________||
+def _expand(chapters, path):
+    for item in chapters:
+        _expand_item(item, path)
 
 ##__________________________________________________________________||
 def _expand_item(item, path):
@@ -44,7 +55,8 @@ def _expand_item(item, path):
     if item['urlpath'] is None:
         item['urlpath'] = item['path']
 
-    if path == item['path']:
-        item['selected'] = True
+    if path:
+        if path == item['path']:
+            item['selected'] = True
 
 ##__________________________________________________________________||

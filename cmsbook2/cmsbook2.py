@@ -29,10 +29,10 @@ def index():
 
 @app.route('/<path:path>')
 def page(path):
-    chapters = load_chapter_lists(cmsbook_path)
-    print(chapters)
     path_items = path.split('/')
     chapter_path = path_items[0]
+    chapters = load_chapter_lists(cmsbook_path, chapter_path)
+    print(chapters)
     subheadernavi = ''.join(make_subhead_navi(chapters, chapter_path))
     pagemenutitle = '<a href="../../references/s0000_index_001" class="selected">References</a>'
     thisfile = ''
