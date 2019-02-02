@@ -32,9 +32,9 @@ def page(path):
     path_items = path.split('/')
     chapter_path = path_items[0]
     chapters = load_chapter_lists(cmsbook_path, chapter_path)
-    print(chapters)
+    path_title_dict = dict([(i['path'], i['title']) for i in chapters if 'path' in i])
     subheadernavi = ''.join(make_subhead_navi(chapters))
-    pagemenutitle = '<a href="../../references/s0000_index_001" class="selected">References</a>'
+    pagemenutitle = '<a href="{}">{}</a>'.format(chapter_path, path_title_dict[chapter_path])
     thisfile = ''
     sections = load_section_lists(chapter_path)
     pagemenu = ''.join(make_pagemenu(sections, chapter_path, thisfile))
