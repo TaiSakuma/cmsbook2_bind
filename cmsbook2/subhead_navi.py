@@ -2,12 +2,7 @@
 from .chapter import _copy, _expand_item
 
 ##__________________________________________________________________||
-def make_subhead_navi(chapters, dirpath):
-
-    chapters = _copy(chapters)
-
-    for item in chapters:
-        _expand_item(item, dirpath)
+def make_subhead_navi(chapters):
 
     ret = [ ]
     right = False

@@ -24,7 +24,7 @@ def load_section_lists(chapter_path):
 @app.route('/')
 def index():
     chapters = load_chapter_lists(cmsbook_path)
-    subheadernavi = ''.join(make_subhead_navi(chapters, ''))
+    subheadernavi = ''.join(make_subhead_navi(chapters))
     return render_template('index.html', subheadernavi=subheadernavi)
 
 @app.route('/<path:path>')
@@ -33,7 +33,7 @@ def page(path):
     chapter_path = path_items[0]
     chapters = load_chapter_lists(cmsbook_path, chapter_path)
     print(chapters)
-    subheadernavi = ''.join(make_subhead_navi(chapters, chapter_path))
+    subheadernavi = ''.join(make_subhead_navi(chapters))
     pagemenutitle = '<a href="../../references/s0000_index_001" class="selected">References</a>'
     thisfile = ''
     sections = load_section_lists(chapter_path)

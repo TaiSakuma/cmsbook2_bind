@@ -7,26 +7,26 @@ from cmsbook2.subhead_navi import _render_item
 ##__________________________________________________________________||
 params = [
     pytest.param(
-        [ ], 'cmsbook_home', [ ], id='empty'),
+        [ ], [ ], id='empty'),
     pytest.param(
-        [dict(title='AAA', path='aaa'), ],
-        'cmsbook_home',
+        [dict(title='AAA', path='aaa', urlpath='aaa', selected=False, localonly=False, lock=False), ],
         ['<a href="aaa">AAA</a>',],
         id='one-item'),
     pytest.param(
-        [dict(title='AAA', path='aaa'), dict(title='BBB', path='bbb')],
-        'cmsbook_home',
+        [
+            dict(title='AAA', path='aaa', urlpath='aaa', selected=False, localonly=False, lock=False),
+            dict(title='BBB', path='bbb', urlpath='bbb', selected=False, localonly=False, lock=False)
+        ],
         ['<a href="aaa">AAA</a>', '<span> // </span>', '<a href="bbb">BBB</a>'],
         id='two-items-separator'),
     pytest.param(
         [
-            dict(title='AAA', path='aaa'),
-            dict(title='BBB', path='bbb'),
+            dict(title='AAA', path='aaa', urlpath='aaa', selected=False, localonly=False, lock=False),
+            dict(title='BBB', path='bbb', urlpath='bbb', selected=False, localonly=False, lock=False),
             dict(linebreak=True),
-            dict(title='CCC', path='ccc'),
-            dict(title='DDD', path='ddd'),
+            dict(title='CCC', path='ccc', urlpath='ccc', selected=False, localonly=False, lock=False),
+            dict(title='DDD', path='ddd', urlpath='ddd', selected=False, localonly=False, lock=False),
         ],
-        'cmsbook_home',
         [
             '<a href="aaa">AAA</a>',
             '<span> // </span>',
@@ -39,17 +39,16 @@ params = [
         id='linebreak'),
     pytest.param(
         [
-            dict(title='AAA', path='aaa'),
-            dict(title='BBB', path='bbb'),
+            dict(title='AAA', path='aaa', urlpath='aaa', selected=False, localonly=False, lock=False),
+            dict(title='BBB', path='bbb', urlpath='bbb', selected=False, localonly=False, lock=False),
 	        dict(right=True),
-            dict(title='CCC', path='ccc'),
-            dict(title='DDD', path='ddd'),
+            dict(title='CCC', path='ccc', urlpath='ccc', selected=False, localonly=False, lock=False),
+            dict(title='DDD', path='ddd', urlpath='ddd', selected=False, localonly=False, lock=False),
             dict(linebreak=True),
-            dict(title='EEE', path='eee'),
+            dict(title='EEE', path='eee', urlpath='eee', selected=False, localonly=False, lock=False),
 	        dict(right=True),
-            dict(title='FFF', path='fff'),
+            dict(title='FFF', path='fff', urlpath='fff', selected=False, localonly=False, lock=False),
         ],
-        'cmsbook_home',
         [
             '<a href="aaa">AAA</a>',
             '<span> // </span>',
@@ -68,9 +67,9 @@ params = [
         id='linebreak-right'),
 ]
 
-@pytest.mark.parametrize('chapters, dirpath, expected', params)
-def test_make_subhead_navi(chapters, dirpath, expected):
-    assert expected == make_subhead_navi(chapters, dirpath)
+@pytest.mark.parametrize('chapters, expected', params)
+def test_make_subhead_navi(chapters, expected):
+    assert expected == make_subhead_navi(chapters)
 
 ##__________________________________________________________________||
 params = [
