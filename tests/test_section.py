@@ -1,10 +1,10 @@
 # Tai Sakuma <tai.sakuma@gmail.com>
 import pytest
 
-from cmsbook2.pagemenu import _copy_contents
-from cmsbook2.pagemenu import _add_href_item
-from cmsbook2.pagemenu import _add_thisfile_item
-from cmsbook2.pagemenu import _add_thisfile_ancestor
+from cmsbook2.section import _copy_contents
+from cmsbook2.section import _add_href_item
+from cmsbook2.section import _add_thisfile_item
+from cmsbook2.section import _add_thisfile_ancestor
 
 ##__________________________________________________________________||
 params = [
