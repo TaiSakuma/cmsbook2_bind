@@ -29,8 +29,8 @@ def page(path):
     subheadernavi = ''.join(make_subhead_navi(chapters))
     pagemenutitle = '<a href="{}">{}</a>'.format(chapter_path, path_title_dict[chapter_path])
     thisfile = ''
-    sections = load_section_lists(cmsbook_path, chapter_path)
-    pagemenu = ''.join(make_pagemenu(sections, chapter_path, thisfile))
+    sections = load_section_lists(cmsbook_path, chapter_path, thisfile)
+    pagemenu = ''.join(make_pagemenu(sections))
     return render_template(
         'page.html',
         subheadernavi=subheadernavi,

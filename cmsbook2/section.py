@@ -3,7 +3,13 @@ import os
 import importlib.util
 
 ##__________________________________________________________________||
-def load_section_lists(cmsbook_path, chapter_path):
+def load_section_lists(cmsbook_path, chapter_path, thisfile):
+    sections = _load(cmsbook_path, chapter_path)
+    sections = _expand(sections, chapter_path, thisfile)
+    return sections
+
+##__________________________________________________________________||
+def _load(cmsbook_path, chapter_path):
     path = os.path.join(cmsbook_path, chapter_path, 'cmsbook2_chapter', 'sections.py')
     spec = importlib.util.spec_from_file_location('sections', path)
     sections = importlib.util.module_from_spec(spec)
@@ -11,7 +17,7 @@ def load_section_lists(cmsbook_path, chapter_path):
     return sections.sections
 
 ##__________________________________________________________________||
-def _expand_contents(contents, thisdir, thisfile):
+def _expand(contents, thisdir, thisfile):
     contents = _copy_contents(contents)
     _add_href(contents)
     _add_thisfile(contents, thisdir, thisfile)

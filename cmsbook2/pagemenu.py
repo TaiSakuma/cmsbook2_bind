@@ -1,10 +1,7 @@
 # Tai Sakuma <tai.sakuma@gmail.com>
 
-from .section import _expand_contents
-
 ##__________________________________________________________________||
-def make_pagemenu(contents, thisdir, thisfile):
-    contents = _expand_contents(contents, thisdir, thisfile)
+def make_pagemenu(contents):
     return _render_contents(contents)
 
 ##__________________________________________________________________||
