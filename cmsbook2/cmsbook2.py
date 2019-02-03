@@ -3,10 +3,10 @@
 # http://127.0.0.1:5000/
 import os
 from flask import Flask, render_template
-import importlib.util
 
 from .chapter import load_chapter_lists
 from .subhead_navi import make_subhead_navi
+from .section import load_section_lists
 from .pagemenu import make_pagemenu
 
 app = Flask(__name__)
@@ -14,13 +14,6 @@ app = Flask(__name__)
 cmsbook_path = '/Users/sakuma/Dropbox/cmsbook'
 
 ##__________________________________________________________________||
-def load_section_lists(chapter_path):
-    path = os.path.join(cmsbook_path, chapter_path, 'cmsbook2_chapter', 'sections.py')
-    spec = importlib.util.spec_from_file_location('sections', path)
-    sections = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(sections)
-    return sections.sections
-
 @app.route('/')
 def index():
     chapters = load_chapter_lists(cmsbook_path)
@@ -36,7 +29,7 @@ def page(path):
     subheadernavi = ''.join(make_subhead_navi(chapters))
     pagemenutitle = '<a href="{}">{}</a>'.format(chapter_path, path_title_dict[chapter_path])
     thisfile = ''
-    sections = load_section_lists(chapter_path)
+    sections = load_section_lists(cmsbook_path, chapter_path)
     pagemenu = ''.join(make_pagemenu(sections, chapter_path, thisfile))
     return render_template(
         'page.html',

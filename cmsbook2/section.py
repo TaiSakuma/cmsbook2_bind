@@ -1,4 +1,14 @@
 # Tai Sakuma <tai.sakuma@gmail.com>
+import os
+import importlib.util
+
+##__________________________________________________________________||
+def load_section_lists(cmsbook_path, chapter_path):
+    path = os.path.join(cmsbook_path, chapter_path, 'cmsbook2_chapter', 'sections.py')
+    spec = importlib.util.spec_from_file_location('sections', path)
+    sections = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(sections)
+    return sections.sections
 
 ##__________________________________________________________________||
 def _expand_contents(contents, thisdir, thisfile):
