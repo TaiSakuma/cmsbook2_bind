@@ -15,5 +15,11 @@
          });
         </script>
     </div><!--pagemenu-->
-</div>
+</div><!--pagemenucolumn-->
+<div id="content">
+    {% block content %}
+    {{ content|safe }}
+    {% endblock %}
+    <div class="clear"></div>
+</div><!--content-->
 {% endblock %}

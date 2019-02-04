@@ -31,11 +31,13 @@ def page(path):
     thisfile = ''
     sections = load_section_lists(cmsbook_path, chapter_path, thisfile)
     pagemenu = ''.join(make_pagemenu(sections))
+    content = ''
     return render_template(
         'page.html',
         subheadernavi=subheadernavi,
         pagemenutitle=pagemenutitle,
-        pagemenu=pagemenu
+        pagemenu=pagemenu,
+        content=content
     )
 
 ##__________________________________________________________________||
