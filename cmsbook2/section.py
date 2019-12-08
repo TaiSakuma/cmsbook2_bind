@@ -19,7 +19,7 @@ def _load(cmsbook_path, chapter_path):
 ##__________________________________________________________________||
 def _expand(contents, thisdir, thisfile):
     contents = _copy_contents(contents)
-    _add_href(contents)
+    _add_href(contents, thisdir)
     _add_thisfile(contents, thisdir, thisfile)
     _add_thisfile_ancestor(contents)
     return contents
@@ -36,22 +36,22 @@ def _copy_contents(contents):
             item['subcontents'] = _copy_contents(item['subcontents'])
     return ret
 
-def _add_href(contents):
+def _add_href(contents, thisdir):
     for item in contents:
-        _add_href_item(item)
+        _add_href_item(item, thisdir)
 
-def _add_href_item(item):
+def _add_href_item(item, thisdir):
     if 'href' not in item:
         if 'dir' in item:
             if 'file' in item:
-                item['href'] = '../{}/{}'.format(item['dir'], item['file'])
+                item['href'] = '/{}/{}/{}'.format(thisdir, item['dir'], item['file'])
             else:
-                item['href'] = '../{}/'.format(item['dir'])
+                item['href'] = '/{}/{}/'.format(thisdir, item['dir'])
         elif 'file' in item:
-                item['href'] = '../{}'.format(item['file'])
+                item['href'] = '/{}/{}'.format(thisdir, item['file'])
 
     if 'subcontents' in item:
-        _add_href(item['subcontents'])
+        _add_href(item['subcontents'], thisdir)
 
 def _add_thisfile(contents, thisdir, thisfile):
     for item in contents:

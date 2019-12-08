@@ -47,7 +47,7 @@ def _render_item(item):
     label = '{icons}{head}'.format(icons=icons, head=item['title'])
 
     attributes = [ ]
-    attributes.append('href="{}"'.format(item['urlpath']))
+    attributes.append('href="/{}"'.format(item['urlpath']))
     if item['selected']:
         attributes.append('class="selected"')
     attributes = ' '.join(attributes)
